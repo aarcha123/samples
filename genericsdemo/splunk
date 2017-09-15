@@ -1,0 +1,60 @@
+architecture
+cmd/
+sft+enter
+
+
+1:
+Q: failed root
+_time and _raw
+metadata : host, source , source type
+latest event first
+boolean operators: implicit and , upper
+phrases=" ", wildcards *
+
+2:
+Q: index="main"
+indexes data
+Q: index="main" sourcetype=linux_secure
+field name=case sensitive
+
+3:
+Q: sourcetype="linux_secure" failed password | top user | fields - percent
+visualization - bar chart
+
+4:
+Q: sourcetype="access_combined" | table clientip, action, productId,status
+Q: sourcetype="access_combined" action=* productId=* | table clientip, action, productId,status
+successful purchase of product
+Q: sourcetype="access_combined" action=purchase status=200 productId=* | stats count(status) as purchase by productId | sort purchase desc | rename purchase as "Successful Purchase"
+Q: sourcetype="access_combined" action=purchase status=200 productId=*  | top status by productId
+
+total sales per product
+
+stats - count, sum, avg, dc, values,list
+
+eval example
+Q:sourcetype="access_combined" action=purchase productId=*
+| stats sum(price) as actual, sum(sale_price) as sale by productName
+| eval discount=round((actual-sale)/100,2)."%"
+| sort discount desc limit=3
+
+5: visualization
+Q: sourcetype="access_combined" action=* | timechart count by action
+line chart, area chart for a week, day
+
+Q: sourcetype="linux_secure" (fail* OR invalid) | top src_ip
+Q: sourcetype="linux_secure" (fail* OR invalid) | iplocation src_ip
+Q:sourcetype="linux_secure" (fail* OR invalid) | iplocation src_ip | geostats globallimit=5 count by user
+
+6: reports and dashboard
+save successful purchase as report
+top3 products viewed
+unsuccessful purchase
+Q:sourcetype="access_combined" action=* status>399 | stats count(status) as purchase by productId | sort purchase desc | rename purchase as "Unsuccessful Purchase"
+advertiser - website from which the customers are redirected
+Q:sourcetype="access_combined" referer_domain!="*buttercup*" | top limit=2 referer_domain
+
+7: splunkapps
+
+
+https://prd-p-wtskl453kt2b.cloud.splunk.com/en-US/app/launcher/home
