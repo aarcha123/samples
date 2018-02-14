@@ -1,3 +1,5 @@
+Splunk cloud url : https://prd-p-nxln4f2jrcx8.cloud.splunk.com
+
 architecture
 cmd/
 sft+enter
@@ -57,4 +59,3 @@ Q:sourcetype="access_combined" referer_domain!="*buttercup*" | top limit=2 refer
 7: splunkapps
 
 
-https://prd-p-wtskl453kt2b.cloud.splunk.com/en-US/app/launcher/home
